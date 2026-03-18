@@ -26,16 +26,27 @@ public class JournalEntryService {
 
  @Transactional
     public void saveEntry(JournalEntry journalEntry, String userName){
-        User user = userService.findByUserName(userName);
-        journalEntry.setDate(LocalDateTime.now());
 
-        //save journal entry in db
-        JournalEntry saved = journalEntryRepository.save(journalEntry); //jo journal entry save hui thi db me wo mil jaegi
+     try{
 
-        //ab jo user h uske database me patak denge
-        user.getJournalEntries().add(saved);
-        user.setUserName(null);
-        userService.saveEntry(user); //jo user h usko bhi db me save kra diya with new journal entry
+         User user = userService.findByUserName(userName);
+         journalEntry.setDate(LocalDateTime.now());
+
+         //save journal entry in db
+         JournalEntry saved = journalEntryRepository.save(journalEntry); //jo journal entry save hui thi db me wo mil jaegi
+
+         //ab jo user h uske database me patak denge
+         user.getJournalEntries().add(saved);
+         user.setUserName(null);
+         userService.saveEntry(user);
+
+     }catch (Exception e){
+         System.out.println(e);
+
+         throw  new RuntimeException("An error occured while saving entry", e);
+
+     }
+         //jo user h usko bhi db me save kra diya with new journal entry
     }
     public void saveEntry(JournalEntry journalEntry){
 
