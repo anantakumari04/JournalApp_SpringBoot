@@ -37,7 +37,7 @@ public class JournalEntryService {
 
          //ab jo user h uske database me patak denge
          user.getJournalEntries().add(saved);
-         user.setUserName(null);
+
          userService.saveEntry(user);
 
      }catch (Exception e){
