@@ -23,18 +23,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public List<User> getAllUsers(){
-        return userService.getAll();
-    }
 
-    @PostMapping
-    public void createUser(@RequestBody User user){
-        userService.saveEntry(user);
-    }
 
-    @PutMapping("/{userName}")
-    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String userName ){
+
+
+    @PutMapping()
+    public ResponseEntity<?> updateUser(@RequestBody User user){
+
+
       User userInDb =   userService.findByUserName(userName); //It fetches the existing user from the database whose userName matches the value passed in the URL.
        //If a function returns a User, you store it in a User-type variable.
         if(userInDb != null){
