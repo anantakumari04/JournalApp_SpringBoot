@@ -40,32 +40,16 @@ journal-app/
 
 🔄 Application Flow
 🔐 Authentication Flow
-[ User ]
-    │
-    ▼
-Login / Register
-    │
-    ▼
-Spring Security
-    │
-    ▼
-Generate JWT Token
-    │
-    ▼
-Send Token to Client
-    │
-    ▼
-Client sends token in Header
-    │
-    ▼
-Validate Token
-    │
- ┌───────────────┐
- │ Valid   ❌Invalid │
- └──────┬────────┘
-        ▼
-   Access Granted
+flowchart TD
+    A[User] --> B[Login / Register]
+    B --> C[Spring Security]
+    C --> D[Generate JWT Token]
+    D --> E[Send Token to Client]
+    E --> F[Client sends Token in Header]
+    F --> G[Validate Token]
 
+    G -->|Valid| H[Access Granted ✅]
+    G -->|Invalid| I[Access Denied ❌]
    
 🧠 System Architecture
         ┌──────────────┐
