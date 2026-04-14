@@ -100,6 +100,7 @@ sequenceDiagram
 ```
 📁 Project Structure
 journal-app/
+journal-app/
 │── src/main/java/
 │   ├── controller/
 │   ├── service/
@@ -112,30 +113,39 @@ journal-app/
 │   ├── application.properties
 │
 │── pom.xml
+
 📊 Database Schema
 👤 User Collection
-Field	Type	Description
-id	String	Unique ID
-username	String	User name
-password	String	Encrypted password
+| Field    | Type   | Description        |
+| -------- | ------ | ------------------ |
+| id       | String | Unique ID          |
+| username | String | User name          |
+| password | String | Encrypted password |
+
 📝 Journal Entry Collection
-Field	Type	Description
-id	String	Entry ID
-title	String	Entry title
-content	String	Entry content
-date	Date	Created date
-userId	String	Linked user
+| Field   | Type   | Description   |
+| ------- | ------ | ------------- |
+| id      | String | Entry ID      |
+| title   | String | Entry title   |
+| content | String | Entry content |
+| date    | Date   | Created date  |
+| userId  | String | Linked user   |
+
 🔑 API Endpoints
 🔐 Auth APIs
-Method	Endpoint	Description
-POST	/auth/register	Register user
-POST	/auth/login	Login user
+| Method | Endpoint         | Description   |
+| ------ | ---------------- | ------------- |
+| POST   | `/auth/create-user` | Register user |
+| POST   | `/auth/login`    | Login user    |
+
 📓 Journal APIs
-Method	Endpoint	Description
-GET	/journal	Get all entries
-POST	/journal	Create entry
-PUT	/journal/{id}	Update entry
-DELETE	/journal/{id}	Delete entry
+| Method | Endpoint        | Description     |
+| ------ | --------------- | --------------- |
+| GET    | `/journal`      | Get all entries |
+| POST   | `/journal`      | Create entry    |
+| PUT    | `/journal/{id}` | Update entry    |
+| DELETE | `/journal/{id}` | Delete entry    |
+
 🧪 Sample Request
 POST /auth/login
 
@@ -145,13 +155,18 @@ POST /auth/login
 }
 🔐 JWT Example
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
 ⚙️ Setup Instructions
 1️⃣ Clone Repository
 git clone https://github.com/your-username/journal-app.git
 cd journal-app
+
 2️⃣ Configure MongoDB
 spring.data.mongodb.uri=your_mongodb_connection_string
+
+
 3️⃣ Run Application
+
 mvn spring-boot:run
 📦 Dependencies
 <dependency>
@@ -178,6 +193,8 @@ mvn spring-boot:run
     <groupId>org.projectlombok</groupId>
     <artifactId>lombok</artifactId>
 </dependency>
+
+
 🚀 Future Enhancements
 🔄 Refresh Token Mechanism
 📱 Frontend (React / Android)
