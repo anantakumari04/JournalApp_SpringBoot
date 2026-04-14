@@ -50,6 +50,7 @@ flowchart LR
     E --> F[(☁️ MongoDB Atlas)]
 ```
 🔐 Authentication Flow
+```mermaid
 flowchart TD
     A[👤 User] --> B[Login / Register]
     B --> C[Spring Security]
@@ -60,7 +61,9 @@ flowchart TD
 
     G -->|✅ Valid| H[Access Granted]
     G -->|❌ Invalid| I[Access Denied]
+```
 🔐 Security Flow (JWT Filter)
+```mermaid
 flowchart TD
     A[Login Request] --> B[Authenticate User]
     B --> C[Generate JWT Token]
@@ -72,7 +75,10 @@ flowchart TD
 
     G -->|Valid| H[Allow API Access]
     G -->|Invalid| I[Block Request]
+```
 🔄 Request Lifecycle
+
+```mermaid
 sequenceDiagram
     participant User
     participant Client
@@ -91,6 +97,7 @@ sequenceDiagram
     Service-->>Controller: Response
     Controller-->>Client: JSON
     Client-->>User: Output
+```
 📁 Project Structure
 journal-app/
 │── src/main/java/
