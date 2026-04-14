@@ -13,14 +13,15 @@ A secure and scalable Journal Application built using Spring Boot, implementing 
 🛡️ Spring Security for API protection
 
 🛠️ Tech Stack
-Technology	Purpose
-☕ Spring Boot	Backend Framework
-🔐 Spring Security	Authentication & Authorization
-🪪 JWT	Token-based Authentication
-🔑 BCrypt	Password Hashing
-🍃 MongoDB Atlas	NoSQL Cloud Database
-📦 Lombok	Reduce Boilerplate Code
-🔄 REST APIs	Communication Layer
+| Layer      | Technology      |
+| ---------- | --------------- |
+| Backend    | Spring Boot     |
+| Security   | Spring Security |
+| Auth       | JWT             |
+| Encryption | BCrypt          |
+| Database   | MongoDB Atlas   |
+| Utilities  | Lombok          |
+
 📁 Project Structure
 journal-app/
 │── src/main/java/
@@ -31,32 +32,50 @@ journal-app/
 │   ├── config/
 │   └── security/
 │
-│── resources/
+│── src/main/resources/
 │   ├── application.properties
 │
 │── pom.xml
+
+
 🔄 Application Flow
 🔐 Authentication Flow
-User → Login/Register → Spring Security
-         ↓
-   JWT Token Generated
-         ↓
-   Token Sent to Client
-         ↓
-Client Sends Token in Header
-         ↓
-   Request Validated
-         ↓
-   Access Granted / Denied
+[ User ]
+    │
+    ▼
+Login / Register
+    │
+    ▼
+Spring Security
+    │
+    ▼
+Generate JWT Token
+    │
+    ▼
+Send Token to Client
+    │
+    ▼
+Client sends token in Header
+    │
+    ▼
+Validate Token
+    │
+ ┌───────────────┐
+ │ Valid   ❌Invalid │
+ └──────┬────────┘
+        ▼
+   Access Granted
+
+   
 🧠 System Architecture
-        ┌─────────────┐
-        │   Client    │
-        │ (Postman)   │
-        └─────┬───────┘
-              │ HTTP Requests
-              ▼
+        ┌──────────────┐
+        │   Client     │
+        │ (Postman)    │
+        └──────┬───────┘
+               │ HTTP
+               ▼
      ┌──────────────────────┐
-     │  Spring Boot Server  │
+     │ Spring Boot Backend  │
      │----------------------│
      │ Controller Layer     │
      │ Service Layer        │
@@ -67,6 +86,7 @@ Client Sends Token in Header
        ┌───────────────┐
        │ MongoDB Atlas │
        └───────────────┘
+       
 🔐 Security Flow Diagram
         Login Request
               │
@@ -92,29 +112,38 @@ Client Requests API with Token
       ▼                ▼
  Access API        Access Denied ❌
 📊 Database Schema
+
 👤 User Collection
-Field	Type	Description
-id	String	Unique ID
-username	String	User name
-password	String	Encrypted password
+| Field    | Type   | Description        |
+| -------- | ------ | ------------------ |
+| id       | String | Unique ID          |
+| username | String | User name          |
+| password | String | Encrypted (BCrypt) |
+
 📝 Journal Entry Collection
-Field	Type	Description
-id	String	Entry ID
-title	String	Entry title
-content	String	Entry content
-date	Date	Created date
-userId	String	Associated user
+| Field   | Type   | Description   |
+| ------- | ------ | ------------- |
+| id      | String | Entry ID      |
+| title   | String | Entry title   |
+| content | String | Entry content |
+| date    | Date   | Created date  |
+| userId  | String | Linked user   |
+
 🔑 API Endpoints
 🧑‍💻 Auth APIs
-Method	Endpoint	Description
-POST	/auth/register	Register new user
-POST	/auth/login	Login user
+| Method | Endpoint         | Description   |
+| ------ | ---------------- | ------------- |
+| POST   | `/auth/create-user` | Register user |
+| POST   | `/auth/login`    | Login user    |
+
 📓 Journal APIs
-Method	Endpoint	Description
-GET	/journal	Get all entries
-POST	/journal	Create entry
-PUT	/journal/{id}	Update entry
-DELETE	/journal/{id}	Delete entry
+| Method | Endpoint        | Description     |
+| ------ | --------------- | --------------- |
+| GET    | `/journal`      | Get all entries |
+| POST   | `/journal`      | Create entry    |
+| PUT    | `/journal/{id}` | Update entry    |
+| DELETE | `/journal/{id}` | Delete entry    |
+
 🧪 Sample Request (Login)
 POST /auth/login
 
@@ -122,8 +151,11 @@ POST /auth/login
   "username": "ananta",
   "password": "123456"
 }
+
 🔐 JWT Example
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+
 ⚙️ Setup Instructions
 1️⃣ Clone the Repository
 git clone https://github.com/your-username/journal-app.git
@@ -136,38 +168,37 @@ spring.data.mongodb.uri=your_mongodb_connection_string
 3️⃣ Run the App
 mvn spring-boot:run
 🧩 Dependencies (Maven)
-<dependencies>
-    <!-- Spring Boot -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
 
-    <!-- Security -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
 
-    <!-- MongoDB -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-mongodb</artifactId>
-    </dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+</dependency>
 
-    <!-- JWT -->
-    <dependency>
-        <groupId>io.jsonwebtoken</groupId>
-        <artifactId>jjwt</artifactId>
-        <version>0.9.1</version>
-    </dependency>
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt</artifactId>
+</dependency>
 
-    <!-- Lombok -->
-    <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-    </dependency>
-</dependencies>
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+</dependency>
+
+🚀 Future Improvements
+🔄 Refresh Token
+📱 Frontend Integration
+📊 Dashboard
+🤖 AI Journal Suggestions
+
 🧠 Key Concepts Used
 🔐 Authentication vs Authorization
 🪪 Stateless Authentication (JWT)
@@ -185,10 +216,6 @@ mvn spring-boot:run
 🙌 Contribution
 
 Feel free to fork this repo and contribute! 💙
-
-📜 License
-
-This project is licensed under the MIT License.
 
 👩‍💻 Author
 
