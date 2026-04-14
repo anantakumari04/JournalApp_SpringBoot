@@ -37,6 +37,7 @@ Encryption	BCrypt
 Database	MongoDB Atlas
 Tools	Lombok, Maven
 🧠 System Architecture
+```mermaid
 flowchart LR
     A[🌐 Client / Postman] -->|HTTP Request| B[🚀 Spring Boot Backend]
 
@@ -47,6 +48,7 @@ flowchart LR
     end
 
     E --> F[(☁️ MongoDB Atlas)]
+```
 🔐 Authentication Flow
 flowchart TD
     A[👤 User] --> B[Login / Register]
