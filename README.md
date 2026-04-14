@@ -1,27 +1,94 @@
-📓 Journal App (Spring Boot + JWT + MongoDB)
+📓 Journal App
+🚀 Spring Boot • JWT • MongoDB • Secure REST APIs
 
-A secure and scalable Journal Application built using Spring Boot, implementing JWT Authentication, Spring Security, and MongoDB Atlas for cloud data storage.
+
+
+
+
+
+
+
+
+
+✨ Overview
+
+A secure and scalable Journal Application built with Spring Boot, implementing:
+
+🔐 JWT Authentication
+🛡️ Spring Security
+🔑 BCrypt Encryption
+☁️ MongoDB Atlas
+
+This project demonstrates real-world backend architecture with authentication, authorization, and CRUD operations.
 
 🚀 Features
-
-✨ Secure Authentication using JWT
-🔐 Password Encryption using BCrypt
-👤 User Registration & Login
-📝 Create, Read, Update, Delete (CRUD) Journal Entries
-☁️ MongoDB Atlas Cloud Database
-⚡ Lombok for boilerplate reduction
-🛡️ Spring Security for API protection
-
+🔐 Secure Login & Registration (JWT)
+🔑 Password Encryption using BCrypt
+📝 Journal CRUD Operations
+☁️ MongoDB Atlas Cloud Storage
+⚡ Clean Architecture (Controller → Service → Repository)
+🛡️ Protected APIs using Spring Security
 🛠️ Tech Stack
-| Layer      | Technology      |
-| ---------- | --------------- |
-| Backend    | Spring Boot     |
-| Security   | Spring Security |
-| Auth       | JWT             |
-| Encryption | BCrypt          |
-| Database   | MongoDB Atlas   |
-| Utilities  | Lombok          |
+Layer	Technology
+Backend	Spring Boot
+Security	Spring Security
+Auth	JWT
+Encryption	BCrypt
+Database	MongoDB Atlas
+Tools	Lombok, Maven
+🧠 System Architecture
+flowchart LR
+    A[🌐 Client / Postman] -->|HTTP Request| B[🚀 Spring Boot Backend]
 
+    subgraph Backend Layers
+        B --> C[📥 Controller]
+        C --> D[⚙️ Service]
+        D --> E[🗄️ Repository]
+    end
+
+    E --> F[(☁️ MongoDB Atlas)]
+🔐 Authentication Flow
+flowchart TD
+    A[👤 User] --> B[Login / Register]
+    B --> C[Spring Security]
+    C --> D[Generate JWT Token]
+    D --> E[Send Token to Client]
+    E --> F[Client sends Token in Header]
+    F --> G[Validate Token]
+
+    G -->|✅ Valid| H[Access Granted]
+    G -->|❌ Invalid| I[Access Denied]
+🔐 Security Flow (JWT Filter)
+flowchart TD
+    A[Login Request] --> B[Authenticate User]
+    B --> C[Generate JWT Token]
+    C --> D[Send Token]
+
+    D --> E[Client Request with Token]
+    E --> F[JWT Filter]
+    F --> G[Validate Token]
+
+    G -->|Valid| H[Allow API Access]
+    G -->|Invalid| I[Block Request]
+🔄 Request Lifecycle
+sequenceDiagram
+    participant User
+    participant Client
+    participant Controller
+    participant Service
+    participant Repository
+    participant DB
+
+    User->>Client: Request
+    Client->>Controller: HTTP Request
+    Controller->>Service: Process
+    Service->>Repository: DB Call
+    Repository->>DB: Query
+    DB-->>Repository: Data
+    Repository-->>Service: Data
+    Service-->>Controller: Response
+    Controller-->>Client: JSON
+    Client-->>User: Output
 📁 Project Structure
 journal-app/
 │── src/main/java/
@@ -36,122 +103,48 @@ journal-app/
 │   ├── application.properties
 │
 │── pom.xml
-
-
-🔄 Application Flow
-🔐 Authentication Flow
-flowchart TD
-    A[User] --> B[Login / Register]
-    B --> C[Spring Security]
-    C --> D[Generate JWT Token]
-    D --> E[Send Token to Client]
-    E --> F[Client sends Token in Header]
-    F --> G[Validate Token]
-
-    G -->|Valid| H[Access Granted ✅]
-    G -->|Invalid| I[Access Denied ❌]
-   
-🧠 System Architecture
-        ┌──────────────┐
-        │   Client     │
-        │ (Postman)    │
-        └──────┬───────┘
-               │ HTTP
-               ▼
-     ┌──────────────────────┐
-     │ Spring Boot Backend  │
-     │----------------------│
-     │ Controller Layer     │
-     │ Service Layer        │
-     │ Repository Layer     │
-     └─────────┬────────────┘
-               │
-               ▼
-       ┌───────────────┐
-       │ MongoDB Atlas │
-       └───────────────┘
-       
-🔐 Security Flow Diagram
-        Login Request
-              │
-              ▼
-     Authenticate User
-              │
-              ▼
-     Generate JWT Token
-              │
-              ▼
-   Send Token to Client
-              │
-              ▼
-Client Requests API with Token
-              │
-              ▼
-   Validate Token (Filter)
-              │
-      ┌───────┴────────┐
-      ▼                ▼
- Valid Token      Invalid Token
-      │                │
-      ▼                ▼
- Access API        Access Denied ❌
 📊 Database Schema
-
 👤 User Collection
-| Field    | Type   | Description        |
-| -------- | ------ | ------------------ |
-| id       | String | Unique ID          |
-| username | String | User name          |
-| password | String | Encrypted (BCrypt) |
-
+Field	Type	Description
+id	String	Unique ID
+username	String	User name
+password	String	Encrypted password
 📝 Journal Entry Collection
-| Field   | Type   | Description   |
-| ------- | ------ | ------------- |
-| id      | String | Entry ID      |
-| title   | String | Entry title   |
-| content | String | Entry content |
-| date    | Date   | Created date  |
-| userId  | String | Linked user   |
-
+Field	Type	Description
+id	String	Entry ID
+title	String	Entry title
+content	String	Entry content
+date	Date	Created date
+userId	String	Linked user
 🔑 API Endpoints
-🧑‍💻 Auth APIs
-| Method | Endpoint         | Description   |
-| ------ | ---------------- | ------------- |
-| POST   | `/auth/create-user` | Register user |
-| POST   | `/auth/login`    | Login user    |
-
+🔐 Auth APIs
+Method	Endpoint	Description
+POST	/auth/register	Register user
+POST	/auth/login	Login user
 📓 Journal APIs
-| Method | Endpoint        | Description     |
-| ------ | --------------- | --------------- |
-| GET    | `/journal`      | Get all entries |
-| POST   | `/journal`      | Create entry    |
-| PUT    | `/journal/{id}` | Update entry    |
-| DELETE | `/journal/{id}` | Delete entry    |
-
-🧪 Sample Request (Login)
+Method	Endpoint	Description
+GET	/journal	Get all entries
+POST	/journal	Create entry
+PUT	/journal/{id}	Update entry
+DELETE	/journal/{id}	Delete entry
+🧪 Sample Request
 POST /auth/login
 
 {
   "username": "ananta",
   "password": "123456"
 }
-
 🔐 JWT Example
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-
-
 ⚙️ Setup Instructions
-1️⃣ Clone the Repository
+1️⃣ Clone Repository
 git clone https://github.com/your-username/journal-app.git
 cd journal-app
-2️⃣ Configure MongoDB Atlas
-
-Add in application.properties:
-
+2️⃣ Configure MongoDB
 spring.data.mongodb.uri=your_mongodb_connection_string
-3️⃣ Run the App
+3️⃣ Run Application
 mvn spring-boot:run
-🧩 Dependencies (Maven)
+📦 Dependencies
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-web</artifactId>
@@ -176,31 +169,19 @@ mvn spring-boot:run
     <groupId>org.projectlombok</groupId>
     <artifactId>lombok</artifactId>
 </dependency>
-
-🚀 Future Improvements
-🔄 Refresh Token
-📱 Frontend Integration
-📊 Dashboard
-🤖 AI Journal Suggestions
-
-🧠 Key Concepts Used
-🔐 Authentication vs Authorization
-🪪 Stateless Authentication (JWT)
-🔑 Password Hashing (BCrypt)
-🧱 Layered Architecture (Controller → Service → Repository)
-☁️ Cloud Database Integration
-📌 Future Enhancements
-
-🚀 Refresh Token Mechanism
+🚀 Future Enhancements
+🔄 Refresh Token Mechanism
 📱 Frontend (React / Android)
-📊 Analytics Dashboard
+📊 Dashboard & Analytics
 🔔 Notifications
-🧠 AI-based Journal Suggestions
-
+🤖 AI-based Journal Suggestions
 🙌 Contribution
 
-Feel free to fork this repo and contribute! 💙
+Contributions are welcome!
+Fork the repo and submit a PR 💙
 
 👩‍💻 Author
 
 Ananta Kumari (Nova 💫)
+
+⭐ If you like this project, give it a star!
